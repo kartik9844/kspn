@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@heroicons/react": "^2.1.1",
+    "@material-tailwind/react": "^2.1.9",
     "@thirdweb-dev/react": "^3.16.5",
     "@thirdweb-dev/sdk": "^3.10.67",
     "antd": "^5.14.2",
