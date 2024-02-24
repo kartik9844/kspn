@@ -1,4 +1,5 @@
 import React from "react";
+import Link from 'next/link'
 
 export default function Rdashboard() {
     return (
@@ -6,13 +7,13 @@ export default function Rdashboard() {
             <div className="flex flex-col h-screen p-3 bg-slate-400 shadow w-60">
                 <div className="space-y-3">
                     <div className="flex items-center">
-                        <h2 className="text-xl font-bold text-black">Dashboard</h2>
+                        <h2 className="text-xl font-bold text-black"><Link href="Rdashboard">Dashboard</Link></h2>
                     </div>
                     <div className="flex-1">
                         <ul className="pt-2 pb-4 space-y-1 text-sm">
                             <li className="rounded-sm">
                                 <a
-                                    href="#"
+                                    href="listlicence"
                                     className="flex items-center p-2 space-x-3 rounded-md"
                                 >
                                     <svg
@@ -35,7 +36,7 @@ export default function Rdashboard() {
                             </li>
                             <li className="rounded-sm">
                                 <a
-                                    href="#"
+                                    href="rform"
                                     className="flex items-center p-2 space-x-3 rounded-md"
                                 >
                                     <svg
@@ -57,7 +58,7 @@ export default function Rdashboard() {
                             </li>
                             <li className="rounded-sm">
                                 <a
-                                    href="#"
+                                    href="rverify"
                                     className="flex items-center p-2 space-x-3 rounded-md"
                                 >
                                     <svg
@@ -79,7 +80,7 @@ export default function Rdashboard() {
                             </li>
                             <li className="rounded-sm">
                                 <a
-                                    href="#"
+                                    href="/"
                                     className="flex items-center p-2 space-x-3 rounded-md"
                                 >
                                     <svg
