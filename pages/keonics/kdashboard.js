@@ -1,9 +1,13 @@
 import React from 'react'
+import Sidebar from '../components/sidebar'
 
-function Kdashboard() {
+function kdashboard() {
   return (
-    <div>kdashboard</div>
+    
+    <div>
+        <Sidebar/>
+        <h1>kdashboard</h1></div>
   )
 }
 
-export default Kdashboard
+export default kdashboard
