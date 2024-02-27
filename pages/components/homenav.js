@@ -24,18 +24,18 @@ const Homenav = () => {
           Kenoics login
         </BsButton>
         <BsButton
-          className="absolute w-[calc(100%_-_1450px)] top-[17.4px] right-[196.84px] left-[102.16px] cursor-pointer"
+          className="absolute w-[calc(100%_-_1410px)] top-[17.4px] right-[196.84px] left-[102.16px] cursor-pointer"
           variant="outline-primary"
           onClick={() => router.push('./certificate/cform')}
         >
-          certifate
+          CERTIFICATE
         </BsButton>
         <BsButton
-          className="absolute w-[calc(100%_-_1450px)] top-[17.4px] right-[11.53px] left-[232.47px] cursor-pointer"
+          className="absolute w-[calc(100%_-_1410px)] top-[17.4px] right-[11.53px] left-[232.47px] cursor-pointer"
           variant="outline-primary"
           onClick={() => router.push('./licence/lform')}
         >
-          licences
+         LICENSES
         </BsButton>
       </div>
 
