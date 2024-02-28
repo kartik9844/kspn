@@ -1,6 +1,5 @@
 import React from "react";
 import Link from 'next/link'
-import DenseTable from "../components/table";
 export default function Listlicence() {
     return (
         <div className="flex bg-white">
@@ -130,7 +129,6 @@ export default function Listlicence() {
                             20k
                         </div>
                     </div>
-                    <DenseTable />
                 </div>
             </div>
         </div>
