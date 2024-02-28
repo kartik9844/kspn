@@ -103,33 +103,186 @@ export default function Rform() {
                     </div>
                 </div>
             </div>
-            <div className="container mx-auto mt-12">
-                <div className="grid grid-cols-1 gap-6 mb-6 lg:grid-cols-3">
-                    <div className="w-full px-4 py-5 bg-white rounded-lg shadow">
-                        <div className="text-sm font-medium text-gray-500 truncate">
-                            Total users
-                        </div>
-                        <div className="mt-1 text-3xl font-semibold text-gray-900">
-                            12,00
-                        </div>
-                    </div>
-                    <div className="w-full px-4 py-5 bg-white rounded-lg shadow">
-                        <div className="text-sm font-medium text-gray-500 truncate">
-                            Total Profit
-                        </div>
-                        <div className="mt-1 text-3xl font-semibold text-gray-900">
-                            $ 450k
-                        </div>
-                    </div>
-                    <div className="w-full px-4 py-5 bg-white rounded-lg shadow">
-                        <div className="text-sm font-medium text-gray-500 truncate">
-                            Total Orders
-                        </div>
-                        <div className="mt-1 text-3xl font-semibold text-gray-900">
-                            20k
-                        </div>
-                    </div>
+
+
+      <form className="relative left-[450px]">
+      <div className="space-y-10">
+        <div className=" border-b border-gray-900/10 pb-12 ">
+          <div className="mt-10 grid grid-cols-1 gap-x-11 gap-y-11 sm:grid-cols-6">
+            <div className=" relative w-[516px] h-[120px] sm:col-span-4">
+              <label htmlFor="username" className="block text-sm font-medium leading-10 text-black ">
+                Name
+              </label>
+              <div className="mt-2">
+                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                  <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    className="block flex-1 border-0 bg-white py-1.5 pl-1 text-black placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="Enter name"
+            required
+                  />
                 </div>
+              </div>
+            </div>
+          </div>
+          <div className=" relative w-[516px] h-[120px] sm:col-span-4">
+              <label htmlFor="username" className="block text-sm font-medium leading-10 text-black ">
+                Father Name
+              </label>
+              <div className="mt-2">
+                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                  <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    className="block flex-1 border-0 bg-white py-1.5 pl-1 text-black placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="Enter name"
+            required
+                  />
+                </div>
+              </div>
+            </div>
+            <div className=" relative w-[516px] h-[120px] sm:col-span-4">
+              <label htmlFor="username" className="block text-sm font-medium leading-10 text-black ">
+                DOB
+              </label>
+              <div className="mt-2">
+                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                  <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    className="block flex-1 border-0 bg-white py-1.5 pl-1 text-black placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="Enter name"
+            required
+                  />
+                </div>
+              </div>
+            </div>
+            <div className=" relative w-[516px] h-[120px] sm:col-span-4">
+              <label htmlFor="username" className="block text-sm font-medium leading-10 text-black ">
+               Validate Date
+              </label>
+              <div className="mt-2">
+                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                  <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    className="block flex-1 border-0 bg-white py-1.5 pl-1 text-black placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="Enter name"
+            required
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="relative w-[516px] h-[70px] sm:col-span-4">
+              <label htmlFor="username" className="block text-sm font-medium leading-6 text-black">
+                Model no.
+              </label>
+              <div className="mt-2">
+                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                  <input
+                    type="text"
+                    name="modelno"
+                    id="modelno"
+                    autoComplete="modelno"
+                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-black placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="Enter model number"
+            required
+                  />
+                </div>
+              </div>
+            </div>
+            <div className=" relative w-[516px] h-[120px] sm:col-span-4">
+              <label htmlFor="username" className="block text-sm font-medium leading-10 text-black ">
+                COV
+              </label>
+              <div className="mt-2">
+                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                  <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    className="block flex-1 border-0 bg-white py-1.5 pl-1 text-black placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="Enter name"
+            required
+                  />
+                </div>
+              </div>
+            </div>
+            <div className=" relative w-[516px] h-[120px] sm:col-span-4">
+              <label htmlFor="username" className="block text-sm font-medium leading-10 text-black ">
+                ADDRESS
+              </label>
+              <div className="mt-2">
+                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                  <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    className="block flex-1 border-0 bg-white py-1.5 pl-1 text-black placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="Enter name"
+            required
+                  />
+                </div>
+              </div>
+            </div>
+
+         
+          
+            
+            <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+          </div>
+          <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+            <div className="relative w-[516px] h-[70px] sm:col-span-4">
+              <label htmlFor="username" className="block text-sm font-medium leading-6 text-black">
+                Model no.
+              </label>
+              <div className="mt-2">
+                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                  <input
+                    type="text"
+                    name="modelno"
+                    id="modelno"
+                    autoComplete="modelno"
+                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-black placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="Enter model number"
+            required
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+            
+          </div>
+          <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+          </div>
+          <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+          </div>
+          <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+          </div>
+          
+        </div>
+
+      </div>
+
+      <div className="mt-6 flex items-center justify-end gap-x-6">
+       
+        <button
+          type="submit"
+          className="relative -left-[170px] w-[226px] h-[50px] rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        >
+          SUBMIT
+        </button>
+      </div>
+    </form>
+
+            <div className="container mx-auto mt-12">
+
             </div>
         </div>
     );
