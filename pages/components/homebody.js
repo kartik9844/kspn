@@ -7,15 +7,16 @@ const Homebody = () => {
   return (
     <div className="self-stretch bg-dwhite overflow-hidden flex flex-row items-center justify-center text-left text-31xl text-darkslategray-100 font-popins">
       <div className="flex-1 overflow-hidden flex flex-row py-14 pr-[155.7999725341797px] pl-[155.8000030517578px] items-center justify-center">
-        <div className="w-[400px] h-[510px] flex flex-col items-start justify-start gap-[19px] max-w-[2018px]">
+        <div className="w-[500px] h-[380px] flex flex-col items-start justify-start gap-[25px] max-w-[2018px]">
           <div className="w-[400px] flex flex-row items-start justify-start">
-            <h1 className="m-0 relative text-inherit tracking-[-2px] leading-[35px] font-normal font-popins inline-block max-w-[800px]">
+            <h1 className="m-0 relative text-inherit tracking-[-3px] leading-[35px] font-normal font-popins inline-block max-w-[850px]">
               <p>{`Blockchain based driving license and course completion certificate generation and validation system`}</p>
             </h1>
           </div>
           <div className="w-[400px] flex flex-row items-start justify-start text-5xl text-gray">
-            <h2 className="m-0 relative text-inherit tracking-[-0.5px] leading-[34px] font-normal font-popins inline-block max-w-[401px]">
-              <p className="m-0">{`An all-encompassing lab, in collaboration with IESA,Government of Karnataka, DST, and Nidhi PRAYAS, empowering mechatronics innovators with top notch facilities, skill development,and expert guidance for seamlessidea and expert guidance for seamless idea-to-prototype realization`}</p>
+            <h2 className="m-0 relative text-inherit tracking-[-0.4px] leading-[35px] font-normal font-popins inline-block max-w-[401px]">
+              <p className="m-0">{`
+The blockchain-based Certification System on Polygon transforms governmental licensing. With separate portals for RTO and KIONCS, it streamlines license and certificate handling. Using blockchain's security, it guarantees authenticity, enhancing trust. This system simplifies online certification, paving the way for transparent digital governance.`}</p>
             </h2>
           </div>
           <div className="flex flex-row items-center justify-center gap-[15px]">
