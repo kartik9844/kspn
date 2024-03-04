@@ -13,36 +13,23 @@ const Homebody = () => {
               <p>{`Blockchain based driving license and course completion certificate generation and validation system`}</p>
             </h1>
           </div>
-          <div className="w-[400px] flex flex-row items-start justify-start text-5xl text-gray">
+          <div className="w-[420px] h-[510px]  flex-row items-start justify-start text-xs text-gray">
             <h2 className="m-0 relative text-inherit tracking-[-0.5px] leading-[34px] font-normal font-popins inline-block max-w-[401px]">
-              <p className="m-0">{`An all-encompassing lab, in collaboration with IESA,Government of Karnataka, DST, and Nidhi PRAYAS, empowering mechatronics innovators with top notch facilities, skill development,and expert guidance for seamlessidea and expert guidance for seamless idea-to-prototype realization`}</p>
+              <p className="m-0 text-lg">{`The blockchain-based solution on the Polygon network revolutionizes online certification and licensing processes. With distinct portals for the RTO and KIONCS, users can seamlessly generate and validate licenses and certificates. Leveraging Polygon's blockchain ensures a secure environment, minimizing fraud risks and enhancing trust. This system addresses the pressing need for streamlined and secure certification procedures. Its user-friendly interface and blockchain technology pave the way for a future of digital governance focused on transparency and efficiency.`}</p>
             </h2>
           </div>
-          <div className="flex flex-row items-center justify-center gap-[15px]">
-            <Button
-              className="cursor-pointer"
-              variant="outline-primary"
-            //   onClick={onDivframer14dfk51Click}
-            >
-              Get Started
-            </Button>
-            <Button
-              className="cursor-pointer"
-              variant="outline-primary"
-            //   onClick={onDivframer1soagorClick}
-            >
-              Learn More
-            </Button>
-          </div>
+          
         </div>
       </div>
       <img
         className="relative w-[711.6px] h-[400px] m-14 overflow-hidden shrink-0 object-cover"
         alt=""
-        src="/f4z9junbeullvmi8q0nh3kuxkf8jpg@2x.png"
+        src="blockchain.jpg"
       />
     </div>
   );
 };
 
 export default Homebody;
+
+

@@ -14,14 +14,14 @@ const Homenav = () => {
           variant="outline-primary"
           onClick={() => router.push('./RTO/rtologin')}
         >
-          RTO login
+          RTO LOGIN
         </BsButton>
         <BsButton
           className="absolute top-[calc(50%_-_20px)] left-[calc(50%_+_612.09px)] cursor-pointer"
           variant="outline-primary"
           onClick={() => router.push('./keonics/klogin')}
         >
-          Kenoics login
+          KEONICS LOGIN
         </BsButton>
         <BsButton
           className="absolute w-[calc(100%_-_1410px)] top-[17.4px] right-[196.84px] left-[102.16px] cursor-pointer"
