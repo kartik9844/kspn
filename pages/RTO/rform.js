@@ -1,6 +1,72 @@
-import React from "react";
+
 import Link from 'next/link'
+import React, { useState } from 'react';
+import { useStateContext } from '@/context';
+import { Button } from "react-bootstrap";
+import { useContract, useContractWrite } from "@thirdweb-dev/react";
 export default function Rform() {
+  
+    const {connect,certifate,address}=useStateContext();
+    const { contract } = useContract("0xAe2296f39bC5d21b367d1C4BA0674e6d241dEBb3");
+    const { mutateAsync: createLicense, isLoading } = useContractWrite(contract, "createLicense")
+
+  const[Licence , setLicence]=useState({ 
+    fullname:'',
+    Fathername:'',
+    Dob:'',
+    ValidateDate:'',
+    dlno:'',
+    cov:'',
+    phone:'',
+    address:'',
+  });
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setLicence((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // Handle form submission logic here
+    const call = async () => {
+      try {
+        const data = await createLicense({
+          args: [
+            Licence.fullname,
+            Licence.Dob,
+            Licence.dlno,
+            Licence.ValidateDate,
+            Licence.Fathername,
+            Licence.address]
+        });
+        console.info("contract call successs", data);
+      } catch (err) {
+        console.error("contract call failure", err);
+      }
+    }
+
+    call();
+
+    const docData = {
+      fullname: Licence.fullname,
+      Fathername: Licence.Fathername,
+      Dob: Licence.Dob,
+      ValidateDate: Licence.ValidateDate,
+      dlno: Licence.dlno,
+      cov: Licence.cov,
+      phone: Licence.phone,
+      address: Licence.address,
+    };
+
+    console.log(docData);
+  }
+
+
+  
+
     return (
         <div className="flex bg-white">
             <div className="flex flex-col p-4 bg-slate-400 shadow w-80 ">
@@ -99,28 +165,38 @@ export default function Rform() {
                                     <span>Logout</span>
                                 </a>
                             </li>
+                            <li className="rounded-sm">
+                            <Button variant="dark"className="relative top-2 -left-2 h-[30px]  w-[250px] bg-black" onClick={() => connect()}>Connect</Button>
+                            </li>
+                            <li>
+                              <p>{address}</p>
+                            </li>
                         </ul>
                     </div>
                 </div>
             </div>
 
-
-     <form className="relative left-[450px]">
+      <div>
+      
+      
+     <form className="relative left-[450px]" onSubmit={handleSubmit}>
       <div className="space-y-10">
         <div className=" border-b border-gray-900/10 pb-12 ">
           <div className="mt-10 grid grid-cols-1 gap-x-11 gap-y-11 sm:grid-cols-6">
             <div className=" relative w-[516px] h-[120px] sm:col-span-4">
               <label htmlFor="username" className="block text-sm font-medium leading-10 text-black ">
-                Name
+                Full Name
               </label>
               <div className="mt-2">
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                   <input
                     type="text"
-                    name="name"
-                    id="name"
+                    name="fullname"
+                    id="fullname"
                     className="block flex-1 border-0 bg-white py-1.5 pl-1 text-black placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    placeholder="Enter Your Name"
+                    placeholder="Enter Your FullName"
+                    value={Licence.fullname}
+                    onChange={handleInputChange}
             required
                   />
                 </div>
@@ -135,10 +211,12 @@ export default function Rform() {
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                   <input
                     type="text"
-                    name="name"
-                    id="name"
+                    name="Fathername"
+                    id="Fathername"
                     className="block flex-1 border-0 bg-white py-1.5 pl-1 text-black placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="Enter Your Father Name"
+                    value={Licence.Fathername}
+                    onChange={handleInputChange}
             required
                   />
                 </div>
@@ -152,10 +230,12 @@ export default function Rform() {
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                   <input
                     type="date"
-                    name="name"
-                    id="name"
+                    name="Dob"
+                    id="Dob"
                     className="block flex-1 border-0 bg-white py-1.5 pl-1 text-black placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="Enter DOB"
+                    value={Licence.Dob}
+                    onChange={handleInputChange}
             required
                   />
                 </div>
@@ -169,10 +249,12 @@ export default function Rform() {
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                   <input
                     type="date"
-                    name="name"
-                    id="name"
+                    name="ValidateDate"
+                    id="ValidateDate"
                     className="block flex-1 border-0 bg-white py-1.5 pl-1 text-black placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="Enter name"
+                    value={Licence.ValidateDate}
+                    onChange={handleInputChange}
             required
                   />
                 </div>
@@ -186,11 +268,13 @@ export default function Rform() {
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                   <input
                     type="text"
-                    name="modelno"
-                    id="modelno"
+                    name="dlno"
+                    id="dlno"
                     autoComplete="modelno"
                     className="block flex-1 border-0 py-1.5 pl-1 text-black placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    placeholder="Enter model number"
+                    placeholder="Enter Dlno number"
+                    value={Licence.dlno}
+                    onChange={handleInputChange}
             required
                   />
                 </div>
@@ -204,10 +288,31 @@ export default function Rform() {
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                   <input
                     type="text"
-                    name="name"
-                    id="name"
+                    name="cov"
+                    id="cov"
                     className="block flex-1 border-0 bg-white py-1.5 pl-1 text-black placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="Enter COV Details"
+                    value={Licence.cov}
+                    onChange={handleInputChange}
+            required
+                  />
+                </div>
+              </div>
+            </div>
+            <div className=" relative w-[516px] h-[120px] sm:col-span-4">
+              <label htmlFor="username" className="block text-sm font-medium leading-10 text-black ">
+                Phone number
+              </label>
+              <div className="mt-2">
+                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                  <input
+                    type="text"
+                    name="phone"
+                    id="phone"
+                    className="block flex-1 border-0 bg-white py-1.5 pl-1 text-black placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="Enter Phone number"
+                    value={Licence.phone}
+                    onChange={handleInputChange}
             required
                   />
                 </div>
@@ -221,10 +326,12 @@ export default function Rform() {
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                   <input
                     type="text"
-                    name="name"
-                    id="name"
+                    name="address"
+                    id="address"
                     className="block flex-1 border-0 bg-white py-1.5 pl-1 text-black placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="Enter Your Address"
+                    value={Licence.address}
+                    onChange={handleInputChange}
             required
                   />
                 </div>
@@ -260,7 +367,7 @@ export default function Rform() {
         </button>
       {/* </div> */}
     </form>
-
+    </div>
             <div className="container mx-auto mt-12">
 
             </div>
