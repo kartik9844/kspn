@@ -1,6 +1,7 @@
 import "@/styles/globals.css";
-import { ChainId, ThirdwebProvider  } from "@thirdweb-dev/react";
+import { ChainId, ThirdwebProvider,useContract  } from "@thirdweb-dev/react";
 import { StateContextProvider } from "../context";
+
 // internal import
 
 
@@ -14,4 +15,7 @@ const App = ({ Component, pageProps }) => {
   ); 
 };
 
+function Component() {
+  const { contract, isLoading } = useContract("0x42B456a1879A0349DA9dAd632D2cF2B98AB48c5E");
+}
  export default App;

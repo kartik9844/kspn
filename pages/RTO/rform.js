@@ -6,56 +6,89 @@ import { Button } from "react-bootstrap";
 import { useContract, useContractWrite } from "@thirdweb-dev/react";
 export default function Rform() {
   
-    const {connect,certifate,address}=useStateContext();
-    const { contract } = useContract("0xAe2296f39bC5d21b367d1C4BA0674e6d241dEBb3");
-    const { mutateAsync: createLicense, isLoading } = useContractWrite(contract, "createLicense")
+    const {connect,certifate,address,contract}=useStateContext();
+    // const { contract } = useContract("0x42B456a1879A0349DA9dAd632D2cF2B98AB48c5E");
+  const { mutateAsync: createLicense, isLoading } = useContractWrite(contract, "createLicense")
+  const [serialId, setSerialId] = useState(0);
 
-  const[Licence , setLicence]=useState({ 
-    fullname:'',
-    Fathername:'',
-    Dob:'',
-    ValidateDate:'',
-    dlno:'',
-    cov:'',
-    phone:'',
-    address:'',
+  const [Licence, setLicence] = useState({
+    fullname: '',
+    Fathername: '',
+    Dob: '',
+    ValidateDate: '',
+    dlNo: '',
+    cov: '',
+    phone: '',
+    address: '',
   });
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    let updatedValue = value;
+    if (name === 'dlNo') {
+      // Convert value to string
+      updatedValue = String(value);
+    }
     setLicence((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   };
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here
+    
+    // Convert Dob and ValidateDate to timestamps
+    const dobTimestamp = new Date(Licence.Dob).getTime();
+    const validateTimestamp = new Date(Licence.ValidateDate).getTime();
+    setSerialId((prevSerialId) => prevSerialId + 1);
     const call = async () => {
       try {
-        const data = await createLicense({
+        const data = await createLicense({ 
           args: [
+            serialId,
             Licence.fullname,
-            Licence.Dob,
-            Licence.dlno,
-            Licence.ValidateDate,
             Licence.Fathername,
-            Licence.address]
-        });
+            dobTimestamp,
+            validateTimestamp,
+            Licence.dlNo.toString(),
+            Licence.cov,
+            Licence.address,
+            Licence.phone
+          ] 
+          });
         console.info("contract call successs", data);
       } catch (err) {
         console.error("contract call failure", err);
       }
     }
+    // Handle form submission logic
+    // const call = async () => {
+    //   try {
+    //     const data = await createLicense({
+    //       args: [
+    //         Licence.fullname,
+    //         dobTimestamp,
+    //         Licence.dlNo.toString(), // Convert to string explicitly
+    //         validateTimestamp,
+    //         Licence.Fathername,
+    //         Licence.address
+    //       ]
+    //     });
+    //     console.info("contract call successs", data);
+    //   } catch (err) {
+    //     console.error("contract call failure", err);
+    //   }
+    // }
 
     call();
 
     const docData = {
       fullname: Licence.fullname,
       Fathername: Licence.Fathername,
-      Dob: Licence.Dob,
-      ValidateDate: Licence.ValidateDate,
-      dlno: Licence.dlno,
+      Dob: dobTimestamp,
+      ValidateDate: validateTimestamp,
+      dlNo: Licence.dlNo,
       cov: Licence.cov,
       phone: Licence.phone,
       address: Licence.address,
@@ -63,6 +96,7 @@ export default function Rform() {
 
     console.log(docData);
   }
+
 
 
   
@@ -268,12 +302,12 @@ export default function Rform() {
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                   <input
                     type="text"
-                    name="dlno"
-                    id="dlno"
+                    name="dlNo"
+                    id="dlNo"
                     autoComplete="modelno"
                     className="block flex-1 border-0 py-1.5 pl-1 text-black placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="Enter Dlno number"
-                    value={Licence.dlno}
+                    value={Licence.dlNo}
                     onChange={handleInputChange}
             required
                   />
