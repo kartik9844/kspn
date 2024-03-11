@@ -28,9 +28,9 @@ const adminPassword = "password123";
   }
   return (
     <div className="relative  w-full h-[1024px] overflow-hidden flex flex-col py-0 px-px box-border items-start justify-start gap-[54px]  bg-cover bg-no-repeat bg-[top]font-popins">
-       <div className="relative -right-[690px]  self-stretch text-inherit leading-[25px]font-popins flex items-center w-[470px] shrink-0">
-            <ul className="-m-0 pl-[45px]">
-              RTO OFFICES
+       <div className="relative -right-[690px]  self-stretch text-5xl leading-[36px]font-popins font-semibold flex items-center w-[470px] shrink-0">
+            <ul className="-m-0 pl-[0px]">
+              RTO LOGIN
             </ul>
           </div>
       <section className=" w-[1021px] h-[682px] overflow-hidden shrink-0 flex flex-col items-start justify-start gap-[24px] text-left text-30xl text-gray font-poppins">
@@ -41,7 +41,7 @@ const adminPassword = "password123";
               <b>Email</b>
               <b className="font-popins text-firebrick">*</b>
             </div>
-            <Form.Group className="  [border-solid] border-t-2  bg-[transparent] self-stretch h-[55px] ml-0">
+            <Form.Group className="border-t-1  bg-[transparent] self-stretch h-[55px] ml-0">
               <Form.Control type="text" placeholder="Enter your email" value={email} onChange={e => setEmail(e.target.value)} />
             </Form.Group>
           </div>
@@ -61,14 +61,9 @@ const adminPassword = "password123";
              only:w-[500px] h-[210px] overflow-hidden shrink-0 flex flex-col items-start justify-start gap-[19px] text-black font-popins font-thin">
               <div className="w-[500px] h-[77px] overflow-hidden shrink-0 flex flex-col items-start justify-start gap-[5px]">
                 <div className="w-[200px] h-[26.5px] overflow-hidden shrink-0 flex flex-row items-center justify-start gap-[9px] ml-3.5">
-                  <Form.Check className="relative" />
-                  <div className="relative capitalize inline-block -top-1 w-[150px] h-[23.03px] shrink-0">
-                    {" "}
-                    remember me
-                  </div>
                 </div>
-                <div className="realtive 
-                w-[485px] h-[50px] overflow-hidden shrink-0 flex flex-col items-end justify-center -ml-[7px]">
+                <div className="realtive
+                w-[485px] h-[50px] overflow-hidden  flex flex-col items-end justify-center -ml-[7px]">
                   <Form.Group className="text-blue-600 w-[469px] [border:none] bg-[transparent]">
                   <Button variant="dark"className="relative -top-1 -left-2  w-[250px]" onClick={handleSubmit}>Login</Button>
                   </Form.Group>

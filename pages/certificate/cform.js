@@ -1,6 +1,33 @@
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
+import { useContract, useContractRead } from "@thirdweb-dev/react";
+import React, { useState } from 'react';
 
 export default function cform() {
+  const { contract } = useContract("0x5B13A73938f422092c27F0c8f2C27652e847FA94");
+  const [Data , setData]=useState({ 
+    hash:'',
+    id:''
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { data, isLoading } = useContractRead(contract, "getCertificateByHash", [Data.hash]);
+    console.log(data)
+  }
+
+  const handleid = async (e) => {
+    e.preventDefault();
+    const { data, isLoading } = useContractRead(contract, "getCertificateById", [Data.id]);
+    console.log(data)
+  }
   return (
     <>
       {/*
@@ -26,10 +53,11 @@ export default function cform() {
               </label>
               <div className="mt-2">
                 <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
+                  id="hash"
+                  name="hash"
+                  type="text"
+                  value={Data.hash}
+            onChange={handleInputChange}
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -43,6 +71,7 @@ export default function cform() {
               <button
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                onClick={handleSubmit}
               >
                 SEARCH
               </button>
@@ -65,10 +94,12 @@ export default function cform() {
               </label>
               <div className="mt-2">
                 <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
+                  id="id"
+                  name="id"
+                  type="text"
+                  autoComplete="text"
+                  value={Data.id}
+                  onChange={handleInputChange}
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -78,6 +109,7 @@ export default function cform() {
               <button
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                onClick={handleid}
               >
                 Search
               </button>
