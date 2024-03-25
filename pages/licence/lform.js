@@ -31,7 +31,7 @@ export default function iform() {
   const handleLicenseHashSubmit = (event) => {
     event.preventDefault()
     if (validateHash(licenseHash)) {
-      router.push(`/licence/Licence?licenseHash=${licenseHash}`)
+      router.push(`/licence/licence?licenseHash=${licenseHash}`)
     }
   }
 
