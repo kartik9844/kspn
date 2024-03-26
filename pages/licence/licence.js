@@ -1,127 +1,116 @@
-import { useRouter } from 'next/router'
-import { useState, useEffect } from "react"
-import { useContract, useContractRead } from "@thirdweb-dev/react"
+import { useRouter } from 'next/router';
+import { useState, useEffect } from 'react';
+import { useContract, useContractRead } from '@thirdweb-dev/react';
 
 function LicenseHashPage() {
-  const router = useRouter()
-  const { licenseHash } = router.query // get the licenseHash from query params
+  const router = useRouter();
+  const { licenseHash } = router.query;
 
-  const { contract } = useContract("0x42B456a1879A0349DA9dAd632D2cF2B98AB48c5E")
+  const { contract } = useContract('0x42B456a1879A0349DA9dAd632D2cF2B98AB48c5E');
 
-  const { data, isLoading } = useContractRead(contract, "getLicenseByHash", [licenseHash])
+  const { data, isLoading } = useContractRead(contract, 'getLicenseByHash', [licenseHash]);
 
-  const [parsedData, setParsedData] = useState([])
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const [parsedData, setParsedData] = useState([]);
+  const [serilno, setSerilno] = useState(null);
+  const [Name, setName] = useState(null);
+  const [FatherName, setFatherName] = useState(null);
+  const [Dob, setDob] = useState(null);
+  const [Validdate, setValidDate] = useState(null);
+  const [DLno, setDLno] = useState(null);
+  const [Cov, setCov] = useState(null);
+  const [Address, setAddress] = useState(null);
+  const [phonenumber, setPhoneNumber] = useState(null);
 
   useEffect(() => {
     if (data) {
-      setParsedData(data)
-      setIsDataLoaded(true);
+      setParsedData(data);
     }
-  }, [data])
-  if (isLoading || !Array.isArray(parsedData) || parsedData.length === 0) {
-    return <div className="bg-black p-12 antialiased">Loading data...</div>;
-  }
-//   console.log(typeof parsedData[0]); 
-//   console.log("serilno",parsedData[0]);
-//   console.log(typeof parsedData[1]); 
-//   console.log("Name",parsedData[1]);
-//   console.log(typeof parsedData[2]); 
-//   console.log("FatherName",parsedData[2]);
-//   console.log(typeof parsedData[3]); 
-//   console.log("Dob",parsedData[3]);
-//   console.log(typeof parsedData[4]);
-//   console.log("validDate",parsedData[4]);
-//   console.log(typeof parsedData[5]); 
-//   console.log("DLno",parsedData[5]);
-//   console.log(typeof parsedData[6]); 
-//   console.log("CVM",parsedData[6]);
-//   console.log(typeof parsedData[7]); 
-//   console.log("Address",parsedData[7]);
-//   console.log(typeof parsedData[8]); 
-//   console.log("phonenumber",parsedData[8]);
-const formatDate = (timestamp) => {
-    const date = new Date(timestamp * 0.001);
-    const formattedDate = date.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
-    console.log(formattedDate);
-    return formattedDate;
-  }
-  const dobBigNum = parsedData[3]; 
-  const validBigNum = parsedData[4];
-  const dobTimestamp = Number(dobBigNum) * 1000;
-  const validTimestamp = Number(validBigNum) * 1000;
-  const DOB = formatDate(dobTimestamp);
-  console.log(DOB, "DOB");
-  const ValidDate = formatDate(validTimestamp);
-  console.log(ValidDate,"Validation Date")
-  const serilno = parsedData[0];
-  const Name = parsedData[1];
-  const FatherName = parsedData[2];
-  const DLno = parsedData[5];
-  const Cov = parsedData[6];
-  const Address = parsedData[7];
-  const phonenumber = parsedData[8];
-  console.log(serilno,"serilno")
-  console.log(Name,"Name")
-  console.log(FatherName,"FatherName")
-  console.log(DLno,"DLno")
-  console.log(Cov,"Cov")
-  console.log(Address,"Address") 
-  console.log(phonenumber,"phonenumber")
-//   const docData = {
-//     serilno: parsedData[0],
-//     Name: parsedData[1],
-//     FatherName: parsedData[2],
-//     Dob: DOB,
-//     validDate: ValidDate,
-//     DLno: parsedData[5],
-//     Cov: parsedData[6],
-//     Address: parsedData[7],
-//     phonenumber: parsedData[8],
-//  }; 
-// console.log(docData);
+  }, [data]);
 
-  
+  useEffect(() => {
+    if (parsedData.length > 0) {
+      const formatDate = (timestamp) => {
+        const date = new Date(timestamp * 0.001);
+        const formattedDate = date.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        // console.log(formattedDate);
+        return formattedDate;
+      }
+
+      const dobTimestamp = Number(parsedData[3]) * 1000;
+      const validTimestamp = Number(parsedData[4]) * 1000;
+      const DOB = formatDate(dobTimestamp);
+  // console.log(DOB, "DOB");
+      const ValidDate = formatDate(validTimestamp);
+  // console.log(ValidDate,"Validation Date")
+  const serilnoValue = Number(parseInt(parsedData[0], 16))
+  setSerilno(serilnoValue)
+  console.log(serilnoValue);
+      setName(parsedData[1]);
+      setFatherName(parsedData[2]);
+      setDob(DOB);
+      setValidDate(ValidDate);
+      setDLno(parsedData[5]);
+      setCov(parsedData[6]);
+      setAddress(parsedData[7]);
+      setPhoneNumber(parsedData[8]);
+    }
+  }, [parsedData]);
+
+  if (isLoading || parsedData.length === 0) {
+    return <div className="bg-gray-100 p-12 antialiased">Loading data...</div>;
+  }
 
   return (
-    <div className="bg-gray-100 p-12 antialiased" key={serilno}>
-      <div className="container mx-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        <div className="bg-gray-300 p-8 rounded-lg">
-      <div className="flex justify-between">
-        <div>
-          <span className="text-lg font-semibold">Serial No: {serilno}</span>
+    <div className="flex items-center justify-center h-screen">
+      <div className="bg-white shadow-lg rounded-lg p-8 max-w-xl w-full">
+        <div className="flex items-center justify-center mb-4">
+          <h2 className="text-2xl font-bold text-gray-800">License Details</h2>
         </div>
-        <div>
-          <span className="text-lg font-semibold">DL No: {DLno}</span>
+        <div className="flex flex-col md:flex-row md:space-x-8">
+          <div className="space-y-4">
+            <div>
+              <div className="text-gray-700">Serial Number:</div>
+              <div className="text-gray-800">{serilno}</div>
+            </div>
+            <div>
+              <div className="text-gray-700">Name:</div>
+              <div className="text-gray-800">{Name}</div>
+            </div>
+            <div>
+              <div className="text-gray-700">Father's Name:</div>
+              <div className="text-gray-800">{FatherName}</div>
+            </div>
+            <div>
+              <div className="text-gray-700">Date of Birth:</div>
+              <div className="text-gray-800">{Dob}</div>
+            </div>
+            <div>
+              <div className="text-gray-700">Valid Date:</div>
+              <div className="text-gray-800">{Validdate}</div>
+            </div>
+            <div>
+              <div className="text-gray-700">Driving License Number:</div>
+              <div className="text-gray-800">{DLno}</div>
+            </div>
+            <div>
+              <div className="text-gray-700">Coverage:</div>
+              <div className="text-gray-800">{Cov}</div>
+            </div>
+            <div>
+              <div className="text-gray-700">Address:</div>
+              <div className="text-gray-800">{Address}</div>
+            </div>
+          </div>
+          <div className="space-y-4">
+            <div>
+              <div className="text-gray-700">Phone Number:</div>
+              <div className="text-gray-800">{phonenumber}</div>
+            </div>
+          </div>
         </div>
-      </div>
-      <div className="mt-4">
-        <span className="text-lg font-semibold">Full Name: {Name}</span>
-      </div>
-      <div className="mt-2">
-        <span className="text-lg font-semibold">Father Name: {FatherName}</span>
-      </div>
-      <div className="mt-2">
-        <span className="text-lg font-semibold">DOB: {DOB}</span>
-      </div>
-      <div className="mt-2">
-        <span className="text-lg font-semibold">Valid Date: {ValidDate}</span>
-      </div>
-      <div className="mt-4">
-        <span className="text-lg font-semibold">Cov: {Cov}</span>
-      </div>
-      <div className="mt-2">
-        <span className="text-lg font-semibold">Address: {Address}</span>
-      </div>
-      <div className="mt-2">
-        <span className="text-lg font-semibold">Phone Number: {phonenumber}</span>
       </div>
     </div>
-        </div>
-      </div>
-    </div>
-  )
+  );
 }
 
-export default LicenseHashPage
+export default LicenseHashPage;
