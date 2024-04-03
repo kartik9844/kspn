@@ -34,10 +34,55 @@ export default function Rform() {
       [name]: value,
     }));
   };
-
+  const handleDateValidation = () => {
+    const dob = new Date(Licence.Dob);
+    const validateDate = new Date(Licence.ValidateDate);
+    const diffInYears = (validateDate - dob) / (1000 * 60 * 60 * 24 * 365);
+  
+    if (diffInYears < 23) {
+      return false;
+    }
+    return true;
+  };
+  const handleDLNoValidation = () => {
+    const dlNo = Licence.dlNo;
+    const regex = /^(KA\d{2}[A-Z]{2}\d{4}|KA\d{2}[A-Z]\d{5})$/;
+    return regex.test(dlNo);
+  };
+  const covOptions = [
+    "LMV (Light Motor Vehicle)",
+    "LMV-NT (Light Motor Vehicle - Non-Transport)",
+    "LMV-TR (Light Motor Vehicle - Transport)",
+    "MCWG (Motorcycle Without Gear)",
+    "MCWOG (Motorcycle With Gear)",
+    "HGMV (Heavy Goods Motor Vehicle)",
+    "HPMV (Heavy Passenger Motor Vehicle)",
+    "HPMV-TR (Heavy Passenger Motor Vehicle - Transport)",
+    "MGV (Motorized Goods Vehicle)",
+    "HPMV-L (Heavy Passenger Motor Vehicle - Light)",
+    "HPMV-T (Heavy Passenger Motor Vehicle - Tractor)"
+  ];
+  const handlePhoneValidation = () => {
+    const phone = Licence.phone;
+    const regex = /^\d{10}$/;
+    return regex.test(phone);
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+    if (!handleDateValidation()) {
+      alert("Validate Date should be at least 23 years greater than DOB.");
+      return;
+    }
+  
+    if (!handleDLNoValidation()) {
+      alert("DL No should be in the format KA25HH2658 or KA25C5659.");
+      return;
+    }
+  
+    if (!handlePhoneValidation()) {
+      alert("Phone number should be a 10-digit number.");
+      return;
+    }
     // Convert Dob and ValidateDate to timestamps
     const dobTimestamp = new Date(Licence.Dob).getTime();
     const validateTimestamp = new Date(Licence.ValidateDate).getTime();
@@ -212,8 +257,20 @@ export default function Rform() {
 
       <div>
       
-      
-     <form className="relative left-[450px]" onSubmit={handleSubmit}>
+      {/* Display a message to connect the wallet if it's not connected */}
+      {!address && (
+        <div className="text-center mt-10 relative left-[450px]">
+          <p className='text-black'>Please connect your wallet to continue.</p>
+          <Button variant="dark" className="relative top-2 -left-2 h-[30px]  w-[250px] bg-black" onClick={() => connect()}>
+            Connect
+          </Button>
+        </div>
+      )}
+
+      {/* Display the form if the wallet is connected */}
+      {address && (
+        <div>
+          <form className="relative left-[450px]" onSubmit={handleSubmit}>
       <div className="space-y-10">
         <div className=" border-b border-gray-900/10 pb-12 ">
           <div className="mt-10 grid grid-cols-1 gap-x-11 gap-y-11 sm:grid-cols-6">
@@ -319,17 +376,14 @@ export default function Rform() {
                 COV
               </label>
               <div className="mt-2">
-                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                  <input
-                    type="text"
-                    name="cov"
-                    id="cov"
-                    className="block flex-1 border-0 bg-white py-1.5 pl-1 text-black placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    placeholder="Enter COV Details"
-                    value={Licence.cov}
-                    onChange={handleInputChange}
-            required
-                  />
+                <div className="flex rounded-md text-black shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                <select name="cov" id="cov" value={Licence.cov} onChange={handleInputChange} required>
+  {covOptions.map((option) => (
+    <option key={option} value={option}>
+      {option}
+    </option>
+  ))}
+</select>
                 </div>
               </div>
             </div>
@@ -401,6 +455,9 @@ export default function Rform() {
         </button>
       {/* </div> */}
     </form>
+        </div>
+      )}
+     
     </div>
             <div className="container mx-auto mt-12">
 

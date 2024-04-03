@@ -80,7 +80,7 @@ export default function Listlicence() {
                             </li>
                             <li className="rounded-sm">
                                 <a
-                                    href="#"
+                                    href="/"
                                     className="flex items-center p-2 space-x-3 rounded-md"
                                 >
                                     <svg

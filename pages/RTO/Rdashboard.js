@@ -1,7 +1,7 @@
 import React from "react";
 import Link from 'next/link'
-
-export default function Rdashboard() {
+import Rtable  from '../components/Rtable';
+export default function Listlicence() {
     return (
         <div className="flex bg-white">
             <div className="flex flex-col h-screen p-3 bg-slate-400 shadow w-60">
@@ -11,7 +11,7 @@ export default function Rdashboard() {
                     </div>
                     <div className="flex-1">
                         <ul className="pt-2 pb-4 space-y-1 text-sm">
-                            <li className="rounded-sm">
+                            <li className="rounded-sm underline ">
                                 <a
                                     href="listlicence"
                                     className="flex items-center p-2 space-x-3 rounded-md"
@@ -105,32 +105,7 @@ export default function Rdashboard() {
                 </div>
             </div>
             <div className="container mx-auto mt-12">
-                <div className="grid grid-cols-1 gap-6 mb-6 lg:grid-cols-3">
-                    <div className="w-full px-4 py-5 bg-white rounded-lg shadow">
-                        <div className="text-sm font-medium text-gray-500 truncate">
-                            Total users
-                        </div>
-                        <div className="mt-1 text-3xl font-semibold text-gray-900">
-                            12,00
-                        </div>
-                    </div>
-                    <div className="w-full px-4 py-5 bg-white rounded-lg shadow">
-                        <div className="text-sm font-medium text-gray-500 truncate">
-                            Total Profit
-                        </div>
-                        <div className="mt-1 text-3xl font-semibold text-gray-900">
-                            $ 450k
-                        </div>
-                    </div>
-                    <div className="w-full px-4 py-5 bg-white rounded-lg shadow">
-                        <div className="text-sm font-medium text-gray-500 truncate">
-                            Total Orders
-                        </div>
-                        <div className="mt-1 text-3xl font-semibold text-gray-900">
-                            20k
-                        </div>
-                    </div>
-                </div>
+                <Rtable/>
             </div>
         </div>
     );
