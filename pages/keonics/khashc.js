@@ -2,11 +2,12 @@ import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { useContract, useContractRead } from '@thirdweb-dev/react';
 
-function kcertifcate() {
-  const router = useRouter()
-  const { certificateId } = router.query
+function khashc() {
+  const router = useRouter();
+  const { certificateHash } = router.query;
+
   const { contract } = useContract("0x5B13A73938f422092c27F0c8f2C27652e847FA94");
-  const { data, isLoading } = useContractRead(contract, "getCertificateById", [certificateId])
+  const { data, isLoading } = useContractRead(contract, "getCertificateByHash", [certificateHash])
 
   const [parsedData, setParsedData] = useState([]);
   const [serilno, setSerilno] = useState(null);
@@ -16,7 +17,6 @@ function kcertifcate() {
   const [to, setto] = useState(null);
   const [sc, setsc] = useState(null);
   const [grade, setgrade] = useState(null);
- 
 
   useEffect(() => {
     if (data) {
@@ -54,6 +54,7 @@ function kcertifcate() {
   if (isLoading || parsedData.length === 0) {
     return <div className="bg-gray-100 p-12 antialiased">Loading data...</div>;
   }
+
   return (
     <div className="flex items-center justify-center h-screen">
     <div className="bg-white shadow-lg rounded-lg p-8 max-w-xl w-full">
@@ -97,7 +98,7 @@ function kcertifcate() {
       </div>
     </div>
   </div>
-  )
+  );
 }
 
-export default kcertifcate
+export default Lkhashc;
