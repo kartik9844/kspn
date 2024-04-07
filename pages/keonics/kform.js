@@ -1,6 +1,73 @@
-import React from "react";
 import Link from 'next/link'
+import React, { useState } from 'react';
+import { useStateContext } from '@/context';
+import { Button } from "react-bootstrap";
+import { useContract, useContractWrite } from "@thirdweb-dev/react";
 export default function Kform() {
+    
+  const {connect,certifate,address}=useStateContext();
+  const { contract } = useContract("0x5B13A73938f422092c27F0c8f2C27652e847FA94");
+const { mutateAsync: createCertificate, isLoading } = useContractWrite(contract, "createCertificate")
+const [serialId, setSerialId] = useState(0);
+const [Licence, setLicence] = useState({
+  fullname: '',
+  CourseCompleted: '',
+  Studycenter: '',
+  FormDate: '',
+  ToDate: '',
+  grade: '',
+});
+const handleInputChange = (e) => {
+  const { name, value } = e.target;
+  setLicence((prevData) => ({
+    ...prevData,
+    [name]: value,
+  }));
+};
+const handlePhoneValidation = () => {
+  const phone = Licence.phone;
+  const regex = /^\d{10}$/;
+  return regex.test(phone);
+};
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  // Convert Dob and ValidateDate to timestamps
+  const FromTimestamp = new Date(Licence.FormDate).getTime();
+  const ToTimestamp = new Date(Licence.ToDate).getTime();
+  setSerialId((prevSerialId) => prevSerialId + 1);
+  const call = async () => {
+    try {
+      const data = await createCertificate({ 
+        args: [
+          serialId,
+          Licence.fullname,
+          Licence.CourseCompleted,
+          Licence.Studycenter,
+          FromTimestamp,
+          ToTimestamp,
+          Licence.grade
+        ] 
+        });
+      console.info("contract call successs", data);
+    } catch (err) {
+      console.error("contract call failure", err);
+    }
+  }
+
+  call();
+
+  const docData = {
+    serialId: serialId,
+    fullname: Licence.fullname,
+    CourseCompleted: Licence.CourseCompleted,
+    Studycenter: Licence.Studycenter,
+    FromTimestamp: FromTimestamp,
+    ToTimestamp: ToTimestamp,
+    grade: Licence.grade,
+  };
+
+  console.log(docData);
+}
     return (
         <div className="flex bg-white">
             <div className="flex flex-col h-screen p-3 bg-slate-400 shadow w-60">
@@ -99,11 +166,30 @@ export default function Kform() {
                                     <span>LogOut</span>
                                 </a>
                             </li>
+                            <li className="rounded-sm">
+                            <Button variant="dark"className="relative top-2 -left-2 h-[30px]  w-[250px] bg-black" onClick={() => connect()}>Connect</Button>
+                            </li>
+                            <li>
+                              <p>{address}</p>
+                            </li>
                         </ul>
                     </div>
                 </div>
             </div>
-            <form className="relative left-[450px]">
+            {/* Display a message to connect the wallet if it's not connected */}
+      {!address && (
+        <div className="text-center mt-10 relative left-[450px]">
+          <p className='text-black'>Please connect your wallet to continue.</p>
+          <Button variant="dark" className="relative top-2 -left-2 h-[30px]  w-[250px] bg-black" onClick={() => connect()}>
+            Connect
+          </Button>
+        </div>
+      )}
+
+      {/* Display the form if the wallet is connected */}
+      {address && (
+        <div>
+            <form className="relative left-[450px]" onSubmit={handleSubmit}>
       <div className="space-y-10">
         <div className=" border-b border-gray-900/10 pb-12 ">
           <div className="mt-10 grid grid-cols-1 gap-x-11 gap-y-11 sm:grid-cols-6">
@@ -115,8 +201,10 @@ export default function Kform() {
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                   <input
                     type="text"
-                    name="name"
-                    id="name"
+                    name="fullname"
+                    id="fullname"
+                    value={Licence.fullname}
+                    onChange={handleInputChange}
                     className="block flex-1 border-0 bg-white py-1.5 pl-1 text-black placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="Enter name"
             required
@@ -133,8 +221,10 @@ export default function Kform() {
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                   <input
                     type="text"
-                    name="name"
-                    id="name"
+                    name="CourseCompleted"
+                    id="CourseCompleted"
+                    value={Licence.CourseCompleted}
+                    onChange={handleInputChange}
                     className="block flex-1 border-0 bg-white py-1.5 pl-1 text-black placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="Enter name"
             required
@@ -150,8 +240,10 @@ export default function Kform() {
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                   <input
                     type="text"
-                    name="name"
-                    id="name"
+                    name="Studycenter"
+                    id="Studycenter"
+                    value={Licence.Studycenter}
+                    onChange={handleInputChange}
                     className="block flex-1 border-0 bg-white py-1.5 pl-1 text-black placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="Enter name"
             required
@@ -167,10 +259,11 @@ export default function Kform() {
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                   <input
                     type="date"
-                    name="name"
-                    id="name"
+                    name="FormDate"
+                    id="FormDate"
+                    value={Licence.FormDate}
+                    onChange={handleInputChange}
                     className="block flex-1 border-0 bg-white py-1.5 pl-1 text-black placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    placeholder="Enter name"
             required
                   />
                 </div>
@@ -184,9 +277,10 @@ export default function Kform() {
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                   <input
                     type="date"
-                    name="modelno"
-                    id="modelno"
-                    autoComplete="modelno"
+                    name="ToDate"
+                    id="ToDate"
+                    value={Licence.ToDate}
+                    onChange={handleInputChange}
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-black placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="Enter model number"
             required
@@ -202,10 +296,12 @@ export default function Kform() {
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                   <input
                     type="text"
-                    name="name"
-                    id="name"
+                    name="grade"
+                    id="grade"
+                    value={Licence.grade}
+                    onChange={handleInputChange}
                     className="block flex-1 border-0 bg-white py-1.5 pl-1 text-black placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    placeholder="Enter name"
+                    placeholder="Enter grade"
             required
                   />
                 </div>
@@ -242,6 +338,8 @@ export default function Kform() {
         </button>
       </div>
     </form>
+    </div>
+      )}
         </div>
     );
 }

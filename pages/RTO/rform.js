@@ -6,8 +6,8 @@ import { Button } from "react-bootstrap";
 import { useContract, useContractWrite } from "@thirdweb-dev/react";
 export default function Rform() {
   
-    const {connect,certifate,address,contract}=useStateContext();
-    // const { contract } = useContract("0x42B456a1879A0349DA9dAd632D2cF2B98AB48c5E");
+    const {connect,certifate,address}=useStateContext();
+    const { contract } = useContract("0x42B456a1879A0349DA9dAd632D2cF2B98AB48c5E");
   const { mutateAsync: createLicense, isLoading } = useContractWrite(contract, "createLicense")
   const [serialId, setSerialId] = useState(0);
 
@@ -224,7 +224,7 @@ export default function Rform() {
                             </li>
                             <li className="rounded-sm">
                                 <a
-                                    href="#"
+                                    href="/"
                                     className="flex items-center p-2 space-x-3 rounded-md"
                                 >
                                     <svg
