@@ -9,31 +9,24 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
-import CheckIcon from '@mui/icons-material/Check';
-import ClearIcon from '@mui/icons-material/Clear';
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
-import { FileDownload } from "@mui/icons-material";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import Swal from "sweetalert2";
-import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";export default function ltable() {
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [rows, setRows] = useState([]);
 
-  useEffect(() => {
-    // Fetch data from an API or any other source and set it to the rows state
-    // For example:
-    // setRows([
-    //   { id: 1, fullName: "John Doe", hash: "abc123" },
-    //   { id: 2, fullName: "Jane Doe", hash: "def456" },
-    //   // ...
-    // ]);
-  }, []);
+export default function LTable() {
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rows, setRows] = useState([
+    { serialNo: 1, fullName: "John Doe", hash: "abc123" },
+    { serialNo: 2, fullName: "Jane Smith", hash: "def456" },
+    { serialNo: 3, fullName: "Mike Johnson", hash: "ghi789" },
+    { serialNo: 4, fullName: "Emily Davis", hash: "jkl012" },
+    { serialNo: 5, fullName: "Chris Wilson", hash: "mno345" },
+    { serialNo: 6, fullName: "Sarah Brown", hash: "pqr678" },
+    { serialNo: 7, fullName: "Tom Thompson", hash: "stu901" },
+    { serialNo: 8, fullName: "Laura Miller", hash: "vwx234" },
+    { serialNo: 9, fullName: "Kevin Clark", hash: "yz1234" },
+    { serialNo: 10, fullName: "Jessica White", hash: "5678ab" },
+  ]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -47,15 +40,13 @@ import Autocomplete from "@mui/material/Autocomplete";export default function lt
   return (
     <>
       {rows.length > 0 && (
-        <Paper sx={{ width: "85%", overflow: "hidden", padding: "12px" }} className="relative top-[30px] left-[220px]">
+        <Paper sx={{ width: "85%", overflow: "hidden", padding: "12px" }}>
           <Divider />
           <Box height={10} />
           <Stack direction="row" spacing={2} className="my-2 mb-2">
-            <h4 className="font-popins text-black">licence List</h4>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}></Typography>
-            {/* <Button variant="contained" endIcon={<AddCircleIcon />}>
-              Add
-            </Button> */}
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              Licence List
+            </Typography>
           </Stack>
           <Box height={10} />
           <TableContainer>
@@ -81,10 +72,10 @@ import Autocomplete from "@mui/material/Autocomplete";export default function lt
                       hover
                       role="checkbox"
                       tabIndex={-1}
-                      key={row.id}
+                      key={row.serialNo} // Ensure this key matches a unique identifier from your data
                       style={{ cursor: "pointer" }}
                     >
-                      <TableCell align="left">{row.id}</TableCell>
+                      <TableCell align="left">{row.serialNo}</TableCell>
                       <TableCell align="left">{row.fullName}</TableCell>
                       <TableCell align="left">{row.hash}</TableCell>
                     </TableRow>
