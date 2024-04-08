@@ -11,13 +11,13 @@ import { ethers } from 'ethers';
 const StateContext = createContext();
 
 export const StateContextProvider = ({children}) => {
-    const {contract} = useContract("0x42B456a1879A0349DA9dAd632D2cF2B98AB48c5E");
+    // const {contract} = useContract("0x42B456a1879A0349DA9dAd632D2cF2B98AB48c5E");
     const address = useAddress();
     const connect = useMetamask();
     const certifate = "blockchain certificate "
 
     return(
-        <StateContext.Provider value={{contract,connect,certifate,address}}>
+        <StateContext.Provider value={{connect,certifate,address}}>
             {children}
         </StateContext.Provider>
     );

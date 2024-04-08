@@ -1,73 +1,70 @@
-import Link from 'next/link'
+import Link from 'next/link';
 import React, { useState } from 'react';
-import { useStateContext } from '@/context';
-import { Button } from "react-bootstrap";
-import { useContract, useContractWrite } from "@thirdweb-dev/react";
+import { useSendTransaction } from "thirdweb/react";
+import { prepareContractCall, resolveMethod } from "thirdweb";
+import { contract } from "../_app";
+
 export default function Kform() {
-    
-  const {connect,certifate,address}=useStateContext();
-  const { contract } = useContract("0x5B13A73938f422092c27F0c8f2C27652e847FA94");
-const { mutateAsync: createCertificate, isLoading } = useContractWrite(contract, "createCertificate")
-const [serialId, setSerialId] = useState(0);
-const [Licence, setLicence] = useState({
-  fullname: '',
-  CourseCompleted: '',
-  Studycenter: '',
-  FormDate: '',
-  ToDate: '',
-  grade: '',
-});
-const handleInputChange = (e) => {
-  const { name, value } = e.target;
-  setLicence((prevData) => ({
-    ...prevData,
-    [name]: value,
-  }));
-};
-const handlePhoneValidation = () => {
-  const phone = Licence.phone;
-  const regex = /^\d{10}$/;
-  return regex.test(phone);
-};
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  // Convert Dob and ValidateDate to timestamps
-  const FromTimestamp = new Date(Licence.FormDate).getTime();
-  const ToTimestamp = new Date(Licence.ToDate).getTime();
-  setSerialId((prevSerialId) => prevSerialId + 1);
-  const call = async () => {
-    try {
-      const data = await createCertificate({ 
-        args: [
-          serialId,
-          Licence.fullname,
-          Licence.CourseCompleted,
-          Licence.Studycenter,
-          FromTimestamp,
-          ToTimestamp,
-          Licence.grade
-        ] 
-        });
-      console.info("contract call successs", data);
-    } catch (err) {
-      console.error("contract call failure", err);
-    }
-  }
+    // console.log(contract)
+    const { mutate: sendTransaction, isLoading, isError } = useSendTransaction();
+    const [serialId, setSerialId] = useState(0);
+    const [Licence, setLicence] = useState({
+        fullname: '',
+        CourseCompleted: '',
+        Studycenter: '',
+        FormDate: '',
+        ToDate: '',
+        grade: '',
+    });
 
-  call();
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setLicence((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
 
-  const docData = {
-    serialId: serialId,
-    fullname: Licence.fullname,
-    CourseCompleted: Licence.CourseCompleted,
-    Studycenter: Licence.Studycenter,
-    FromTimestamp: FromTimestamp,
-    ToTimestamp: ToTimestamp,
-    grade: Licence.grade,
-  };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const FromTimestamp = new Date(Licence.FormDate).getTime();
+        const ToTimestamp = new Date(Licence.ToDate).getTime();
+        setSerialId((prevSerialId) => prevSerialId + 1);
 
-  console.log(docData);
-}
+        try {
+            const transaction = await prepareContractCall({
+                contract,
+                method: resolveMethod("createCertificate"),
+                params: [
+                    serialId,
+                    Licence.fullname,
+                    Licence.CourseCompleted,
+                    Licence.Studycenter,
+                    FromTimestamp,
+                    ToTimestamp,
+                    Licence.grade
+                ]
+            });
+            const { transactionHash } = await sendTransaction(transaction);
+            console.log("Transaction hash:", transactionHash);
+
+            const docData = {
+                serialId,
+                fullname: Licence.fullname,
+                CourseCompleted: Licence.CourseCompleted,
+                Studycenter: Licence.Studycenter,
+                FromTimestamp,
+                ToTimestamp,
+                grade: Licence.grade,
+            };
+
+            console.log("Document data:", docData);
+        } catch (error) {
+            console.error("Error submitting transaction:", error);
+            // Handle error (e.g., display error message to the user)
+        }
+    };
+
     return (
         <div className="flex bg-white">
             <div className="flex flex-col h-screen p-3 bg-slate-400 shadow w-60">
@@ -77,7 +74,7 @@ const handleSubmit = async (e) => {
                     </div>
                     <div className="flex-1">
                         <ul className="pt-2 pb-4 space-y-1 text-sm">
-                            <li className="rounded-sm">
+                            <li className="rounded-sm underline">
                                 <a
                                     href="listcertificate"
                                     className="flex items-center p-2 space-x-3 rounded-md"
@@ -97,10 +94,10 @@ const handleSubmit = async (e) => {
 
                                         />
                                     </svg>
-                                    <span>List Certificate</span>
+                                    <span>List Certifate</span>
                                 </a>
                             </li>
-                            <li className="rounded-sm underline">
+                            <li className="rounded-sm">
                                 <a
                                     href="kform"
                                     className="flex items-center p-2 space-x-3 rounded-md"
@@ -119,7 +116,7 @@ const handleSubmit = async (e) => {
                                             d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
                                         />
                                     </svg>
-                                    <span>Generate Certificate</span>
+                                    <span>genrate certifate</span>
                                 </a>
                             </li>
                             <li className="rounded-sm">
@@ -141,7 +138,7 @@ const handleSubmit = async (e) => {
                                             d="M10 17l-5-5 1.4-1.4 3.6 3.6 7.6-7.6L19 8l-9 9z"
                                         />
                                     </svg>
-                                    <span>Verify</span>
+                                    <span>verify</span>
                                 </a>
                             </li>
                             <li className="rounded-sm">
@@ -163,32 +160,13 @@ const handleSubmit = async (e) => {
                                             d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
                                         />
                                     </svg>
-                                    <span>LogOut</span>
+                                    <span>Logout</span>
                                 </a>
-                            </li>
-                            <li className="rounded-sm">
-                            <Button variant="dark"className="relative top-2 -left-2 h-[30px]  w-[250px] bg-black" onClick={() => connect()}>Connect</Button>
-                            </li>
-                            <li>
-                              <p>{address}</p>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
-            {/* Display a message to connect the wallet if it's not connected */}
-      {!address && (
-        <div className="text-center mt-10 relative left-[450px]">
-          <p className='text-black'>Please connect your wallet to continue.</p>
-          <Button variant="dark" className="relative top-2 -left-2 h-[30px]  w-[250px] bg-black" onClick={() => connect()}>
-            Connect
-          </Button>
-        </div>
-      )}
-
-      {/* Display the form if the wallet is connected */}
-      {address && (
-        <div>
             <form className="relative left-[450px]" onSubmit={handleSubmit}>
       <div className="space-y-10">
         <div className=" border-b border-gray-900/10 pb-12 ">
@@ -338,8 +316,6 @@ const handleSubmit = async (e) => {
         </button>
       </div>
     </form>
-    </div>
-      )}
         </div>
     );
 }

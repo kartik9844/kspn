@@ -8,7 +8,6 @@ import Homebody from './components/homebody';
 
 export const index = () => {
 
-  const { contract, connect, certifate, address } = useStateContext();
   return (
     <div className="font-poppins bg-white" >
       <Homenav />
