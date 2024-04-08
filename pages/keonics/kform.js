@@ -2,7 +2,10 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import { useSendTransaction } from "thirdweb/react";
 import { prepareContractCall, resolveMethod } from "thirdweb";
-import { contract } from "../_app";
+import { contract,client } from "../_app";
+import { ConnectButton } from "thirdweb/react";
+import { polygonAmoy } from "thirdweb/chains";
+import { createWallet, embeddedWallet } from "thirdweb/wallets";
 
 export default function Kform() {
     // console.log(contract)
@@ -16,7 +19,10 @@ export default function Kform() {
         ToDate: '',
         grade: '',
     });
-
+    const wallets = [
+      embeddedWallet(),
+      createWallet("io.metamask"),
+    ];
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setLicence((prevData) => ({
@@ -162,6 +168,9 @@ export default function Kform() {
                                     </svg>
                                     <span>Logout</span>
                                 </a>
+                            </li>
+                            <li>
+                            <ConnectButton client={client} wallets={wallets} />
                             </li>
                         </ul>
                     </div>
