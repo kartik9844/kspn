@@ -1,13 +1,18 @@
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import { useContract, useContractRead } from '@thirdweb-dev/react';
+import { resolveMethod } from "thirdweb";
+import { useReadContract } from "thirdweb/react";
+import { contract,client } from "../_app";
 
 function khashc() {
   const router = useRouter();
   const { certificateHash } = router.query;
-
-  const { contract } = useContract("0x5B13A73938f422092c27F0c8f2C27652e847FA94");
-  const { data, isLoading } = useContractRead(contract, "getCertificateByHash", [certificateHash])
+  const { data, isLoading } = useReadContract({ 
+    contract, 
+    method: resolveMethod("getCertificateByHash"), 
+    params: [certificateHash] 
+  });
+  
 
   const [parsedData, setParsedData] = useState([]);
   const [serilno, setSerilno] = useState(null);
@@ -101,4 +106,4 @@ function khashc() {
   );
 }
 
-export default Lkhashc;
+export default khashc;

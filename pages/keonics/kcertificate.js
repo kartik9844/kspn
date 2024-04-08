@@ -1,12 +1,17 @@
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import { useContract, useContractRead } from '@thirdweb-dev/react';
+import { resolveMethod } from "thirdweb";
+    import { useReadContract } from "thirdweb/react";
+    import { contract,client } from "../_app";
 
 function kcertifcate() {
   const router = useRouter()
   const { certificateId } = router.query
-  const { contract } = useContract("0x5B13A73938f422092c27F0c8f2C27652e847FA94");
-  const { data, isLoading } = useContractRead(contract, "getCertificateById", [certificateId])
+  const { data, isLoading } = useReadContract({ 
+    contract, 
+    method: resolveMethod("getCertificateById"), 
+    params: [certificateId] 
+  });
 
   const [parsedData, setParsedData] = useState([]);
   const [serilno, setSerilno] = useState(null);

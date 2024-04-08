@@ -12,6 +12,7 @@ export default function Kform() {
     const { mutate: sendTransaction, isLoading, isError } = useSendTransaction();
     const [serialId, setSerialId] = useState(0);
     const [Licence, setLicence] = useState({
+        sid: "",
         fullname: '',
         CourseCompleted: '',
         Studycenter: '',
@@ -42,7 +43,7 @@ export default function Kform() {
                 contract,
                 method: resolveMethod("createCertificate"),
                 params: [
-                    serialId,
+                    Licence.sid,
                     Licence.fullname,
                     Licence.CourseCompleted,
                     Licence.Studycenter,
@@ -55,7 +56,7 @@ export default function Kform() {
             console.log("Transaction hash:", transactionHash);
 
             const docData = {
-                serialId,
+                sid : Licence.sid,
                 fullname: Licence.fullname,
                 CourseCompleted: Licence.CourseCompleted,
                 Studycenter: Licence.Studycenter,
@@ -180,6 +181,25 @@ export default function Kform() {
       <div className="space-y-10">
         <div className=" border-b border-gray-900/10 pb-12 ">
           <div className="mt-10 grid grid-cols-1 gap-x-11 gap-y-11 sm:grid-cols-6">
+          <div className=" relative w-[516px] h-[120px] sm:col-span-4">
+              <label htmlFor="username" className="block text-sm font-medium leading-10 text-black ">
+               serial number
+              </label>
+              <div className="mt-2">
+                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                  <input
+                    type="number"
+                    name="sid"
+                    id="sid"
+                    value={Licence.sid}
+                    onChange={handleInputChange}
+                    className="block flex-1 border-0 bg-white py-1.5 pl-1 text-black placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="Enter seril number"
+            required
+                  />
+                </div>
+              </div>
+            </div>
             <div className=" relative w-[516px] h-[120px] sm:col-span-4">
               <label htmlFor="username" className="block text-sm font-medium leading-10 text-black ">
                Full Name
