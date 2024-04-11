@@ -1,6 +1,6 @@
 import React from "react";
 import Link from 'next/link'
-import TransactionsTable from "../components/table";
+import Smartlist from "../components/table";
 export default function listcertificate() {
     return (
         <div className="flex bg-white">
@@ -105,7 +105,7 @@ export default function listcertificate() {
                 </div>
             </div>
             <div className="container mx-auto mt-12">
-               <TransactionsTable/>
+               <Smartlist/>
             </div>
         </div>
     );

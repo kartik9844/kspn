@@ -1,6 +1,6 @@
 import React from "react";
 import Link from 'next/link'
-import Rtable  from '../components/Rtable';
+import Smartlist  from '../components/Rtable';
 export default function Listlicence() {
     return (
         <div className="flex bg-white">
@@ -105,7 +105,7 @@ export default function Listlicence() {
                 </div>
             </div>
             <div className="container mx-auto mt-12">
-                <Rtable/>
+                <Smartlist/>
             </div>
         </div>
     );
