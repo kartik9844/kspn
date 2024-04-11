@@ -17,6 +17,12 @@ export const contract = getContract({
   address: "0xAe2296f39bC5d21b367d1C4BA0674e6d241dEBb3"
 });
 
+export const contract1 = getContract({ 
+  client, 
+  chain: polygonAmoy, 
+  address: "0x42B456a1879A0349DA9dAd632D2cF2B98AB48c5E"
+});
+
 
 const App = ({ Component, pageProps }) => {
   return (

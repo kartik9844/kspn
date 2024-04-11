@@ -1,13 +1,22 @@
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import { useContract, useContractRead } from '@thirdweb-dev/react';
-
+import { resolveMethod,getContract } from "thirdweb";
+    import { useReadContract } from "thirdweb/react";
+    import { client } from "../_app";
+    import { polygonAmoy } from "thirdweb/chains";
 function LicenseIdPage() {
   const router = useRouter()
   const { licenseId } = router.query
-  const { contract } = useContract("0x42B456a1879A0349DA9dAd632D2cF2B98AB48c5E");
-  const { data, isLoading } = useContractRead(contract, "getLicenseById", [licenseId])
-
+  const contract = getContract({ 
+    client, 
+    chain: polygonAmoy, 
+    address: "0x42B456a1879A0349DA9dAd632D2cF2B98AB48c5E"
+  });
+  const { data, isLoading } = useReadContract({ 
+    contract, 
+    method: resolveMethod("getLicenseById"), 
+    params: [licenseId] 
+  });
   const [parsedData, setParsedData] = useState([]);
   const [serilno, setSerilno] = useState(null);
   const [Name, setName] = useState(null);
@@ -90,7 +99,7 @@ function LicenseIdPage() {
             <div className="text-gray-800">{DLno}</div>
           </div>
           <div>
-            <div className="text-gray-700">Coverage:</div>
+            <div className="text-gray-700">Cov:</div>
             <div className="text-gray-800">{Cov}</div>
           </div>
           <div>

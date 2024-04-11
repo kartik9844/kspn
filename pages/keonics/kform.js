@@ -54,7 +54,15 @@ export default function Kform() {
             });
             const { transactionHash } = await sendTransaction(transaction);
             console.log("Transaction hash:", transactionHash);
-
+            setLicence({
+             sid: "",
+             fullname: '',
+             CourseCompleted: '',
+             Studycenter: '',
+             FormDate: '',
+             ToDate: '',
+             grade: '',
+            });
             const docData = {
                 sid : Licence.sid,
                 fullname: Licence.fullname,
