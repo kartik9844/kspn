@@ -12,7 +12,7 @@ export default function Rform() {
   const contract = getContract({ 
     client, 
     chain: polygonAmoy, 
-    address: "0x42B456a1879A0349DA9dAd632D2cF2B98AB48c5E"
+    address: "0x932b65a249d87448d687a8242bB6452344A476dD"
   });
   const { mutate: sendTransaction, isLoading, isError } = useSendTransaction();
   const [serialId, setSerialId] = useState(0);
@@ -95,7 +95,7 @@ export default function Rform() {
     console.log('dob:',dobTimestamp);
     const validateTimestamp = new Date(Licence.ValidateDate).getTime();
     setSerialId((prevSerialId) => prevSerialId + 1);
-    const call = async () => {
+    try {
       const transaction = await prepareContractCall({
         contract,
         method: resolveMethod("createLicense"),
@@ -111,11 +111,8 @@ export default function Rform() {
           Licence.phone,
         ],
       });
-      sendTransaction(transaction)
-.then(async (result) => {
-    const { transactionHash } = result;
-    console.log("Transaction hash:", transactionHash);
-    setIsSuccess(true);
+      const { transactionHash } = await sendTransaction(transaction);
+      console.log("Transaction hash:", transactionHash);
     setLicence({
       LicenceId: '',
       fullname: '',
@@ -127,16 +124,27 @@ export default function Rform() {
       phone: '',
       address: '',
     });
-  })
-.catch((error) => {
-    console.error("Error sending transaction:", error);
-  });
+    const docData = {
+      LicenceId: Licence.LicenceId,
+      fullname: Licence.fullname,
+      Fathername: Licence.Fathername,
+      Dob: dobTimestamp,
+      ValidateDate: validateTimestamp,
+      dlNo: Licence.dlNo,
+      cov: Licence.cov,
+      phone: Licence.phone,
+      address: Licence.address,
+    };
+
+    console.log(docData);
+  }catch (error) {
+    console.error("Error submitting transaction:", error);
+    // Handle error (e.g., display error message to the user)
+}
+
   
 
-    // Wait for the transaction to be mined
-    await result.wait();
-    console.log("Transaction mined!");
-    };
+   
     // const call = async () => {
     //   try {
     //     const data = await createLicense({ 
@@ -159,21 +167,9 @@ export default function Rform() {
     // }
     
 
-    call();
+    
 
-    const docData = {
-      LicenceId: Licence.LicenceId,
-      fullname: Licence.fullname,
-      Fathername: Licence.Fathername,
-      Dob: dobTimestamp,
-      ValidateDate: validateTimestamp,
-      dlNo: Licence.dlNo,
-      cov: Licence.cov,
-      phone: Licence.phone,
-      address: Licence.address,
-    };
-
-    console.log(docData);
+    
   }
 
   const wallets =[

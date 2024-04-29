@@ -25,7 +25,7 @@ export default function Smartlist() {
   const contract = getContract({
     client,
     chain: polygonAmoy,
-    address: "0x42B456a1879A0349DA9dAd632D2cF2B98AB48c5E"
+    address: "0x932b65a249d87448d687a8242bB6452344A476dD"
   });
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
