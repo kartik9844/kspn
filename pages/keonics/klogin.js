@@ -71,7 +71,7 @@ const adminPassword = "password123";
                 <div className="realtive 
                 w-[485px] h-[50px] overflow-hidden shrink-0 flex flex-col items-end justify-center -ml-[7px]">
                   <Form.Group className="text-blue-600 w-[469px] [border:none] bg-[transparent]">
-                  <Button variant="dark"className="relative -top-1 -left-2  w-[250px]" onClick={handleSubmit}>Login</Button>
+                  <Button variant="dark"className="relative -top-1 -left-2 text-black  w-[250px]" onClick={handleSubmit}>Login</Button>
                   </Form.Group>
                   
                 </div>
